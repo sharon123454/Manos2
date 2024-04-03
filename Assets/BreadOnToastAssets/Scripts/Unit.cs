@@ -10,9 +10,9 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetMouseButtonDown(0))
         {
-            _targetPosition = MouseWorld.GetPosition();
+            Move(MouseWorld.GetPosition());
         }
 
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)//Stops jittering from never reaching clean position
