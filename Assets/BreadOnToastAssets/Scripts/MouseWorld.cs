@@ -4,7 +4,7 @@ public class MouseWorld : MonoBehaviour
 {
     private static MouseWorld instance;
 
-    private string[] _activeLayerNames = { "MousePlane"/*, "Unit",*/ };
+    private string[] _activeLayerNames = { "MousePlane" };
     private LayerMask _activeMouseLayerMask;
     private bool _isActive = true;
 
@@ -14,9 +14,6 @@ public class MouseWorld : MonoBehaviour
             Destroy(gameObject);
 
         instance = this;
-    }
-    private void Start()
-    {
         _activeMouseLayerMask.value = LayerMask.GetMask(_activeLayerNames);
     }
     
