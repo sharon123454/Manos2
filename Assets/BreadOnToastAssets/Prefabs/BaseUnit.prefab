@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6809665196241624993}
   - component: {fileID: 8989444064761155123}
+  - component: {fileID: 7339070871257945448}
   m_Layer: 6
   m_Name: BaseUnit
   m_TagString: Untagged
@@ -46,6 +47,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5718055997175225877}
+  _unitRotationSpeed: 10
+  _unitMoveSpeed: 6.2
+--- !u!65 &7339070871257945448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546399621768341872}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9, y: 2.3, z: 0.9}
+  m_Center: {x: 0, y: 1.15, z: 0}
 --- !u!1001 &423914768460296307
 PrefabInstance:
   m_ObjectHideFlags: 0

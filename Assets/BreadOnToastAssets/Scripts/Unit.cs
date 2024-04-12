@@ -13,13 +13,13 @@ public class Unit : MonoBehaviour
     private float _stoppingDistance = 0.1f;
     private Vector3 _targetPosition;
 
+    private void Awake()
+    {
+        _targetPosition = transform.position;
+    }
+    //updates character movement
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Move(MouseWorld.GetPosition());
-        }
-
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)//Stops jittering from never reaching clean position
         {
             //Animation
@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour
     /// Unit will move if Update allowes
     /// </summary>
     /// <param name="targetPosition"></param>
-    private void Move(Vector3 targetPosition)
+    public void Move(Vector3 targetPosition)
     {
         _targetPosition = targetPosition;
     }
