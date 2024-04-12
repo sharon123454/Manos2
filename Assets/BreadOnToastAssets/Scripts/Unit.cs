@@ -6,9 +6,12 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    private Vector3 _targetPosition;
+    [Header("Base Unit Parameters")]
+    [SerializeField] private float _unitRotationSpeed = 10f;
+    [SerializeField] private float _unitMoveSpeed = 6.2f;
+
     private float _stoppingDistance = 0.1f;
-    private float _moveSpeed = 4f;
+    private Vector3 _targetPosition;
 
     void Update()
     {
@@ -19,11 +22,27 @@ public class Unit : MonoBehaviour
 
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)//Stops jittering from never reaching clean position
         {
+            //Animation
+            _animator.SetBool("IsWalking", true);
+            //Movement
             Vector3 moveDir = (_targetPosition - transform.position).normalized;
-            transform.position += moveDir * _moveSpeed * Time.deltaTime;
+            transform.position += moveDir * _unitMoveSpeed * Time.deltaTime;
+            //Rotation (smooth rotation because starting point isn't cached)
+            transform.forward = Vector3.Lerp(transform.forward, moveDir, _unitRotationSpeed * Time.deltaTime);
         }
+        else
+        {
+            if (_animator.GetBool("IsWalking"))
+                _animator.SetBool("IsWalking", false);
+        }
+
     }
 
+    /// <summary>
+    /// Sets the units target position.
+    /// Unit will move if Update allowes
+    /// </summary>
+    /// <param name="targetPosition"></param>
     private void Move(Vector3 targetPosition)
     {
         _targetPosition = targetPosition;
