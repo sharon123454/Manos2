@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
+
     private Vector3 _targetPosition;
     private float _stoppingDistance = 0.1f;
     private float _moveSpeed = 4f;
