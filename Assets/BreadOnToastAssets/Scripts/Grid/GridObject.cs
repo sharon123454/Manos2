@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class GridObject : MonoBehaviour
+public class GridObject
 {
+    private List<Unit> _gridUnitList;
     private GridSystem _gridSystem;
     private GridPosition _gridPosition;
 
@@ -11,8 +12,20 @@ public class GridObject : MonoBehaviour
     {
         _gridSystem = gridSystem;
         _gridPosition = gridPosition;
+        _gridUnitList = new List<Unit>();
     }
 
-    public override string ToString() { return _gridPosition.ToString(); }
+    public List<Unit> GetUnitList() { return _gridUnitList; }
+    public void AddUnit(Unit unit) { _gridUnitList.Add(unit); }
+    public void RemoveUnit(Unit unit) { _gridUnitList.Remove(unit); }
+
+    public override string ToString()
+    {
+        string unitString = string.Empty;
+        foreach (Unit unit in _gridUnitList)
+            unitString += unit.gameObject.name + "\n";
+
+        return _gridPosition.ToString() + "\n" + unitString;
+    }
 
 }

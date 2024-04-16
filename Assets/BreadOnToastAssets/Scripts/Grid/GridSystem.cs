@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
-public struct GridPosition
+public struct GridPosition : IEquatable<GridPosition>
 {
-    public int _x;
-    public int _z;
+    public int x;
+    public int z;
 
-    public GridPosition(int x, int z) { _x = x; _z = z; }
-    public override string ToString() { return $"X: {_x}; Z: {_z}"; }
+    public GridPosition(int x, int z) { this.x = x; this.z = z; }
+    public override string ToString() { return $"X: {x}; Z: {z}"; }
+    public override int GetHashCode() { return HashCode.Combine(x, z); }
+    public override bool Equals(object obj) { return obj is GridPosition position && x == position.x && z == position.z; }
+    public bool Equals(GridPosition other) { return this == other; }
+    public static bool operator !=(GridPosition a, GridPosition b) { return !(a == b); }
+    public static bool operator ==(GridPosition a, GridPosition b) { return a.x == b.x && a.z == b.z; }
 }
 
-public class GridSystem : MonoBehaviour
+public class GridSystem
 {
     private int _width;
     private int _height;
@@ -33,26 +39,42 @@ public class GridSystem : MonoBehaviour
                 _gridObjectArray[x, z] = new GridObject(this, gridPosition);
             }
         }
-
     }
 
+    /// <summary>
+    /// Returns the Object which sits on given Grid
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public GridObject GetGridObject(GridPosition gridPosition)
+    {
+        return _gridObjectArray[gridPosition.x, gridPosition.z];
+    }
+
+    /// <summary>
+    /// Returns mathematical World position by grid
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
     public Vector3 GetWorldPosition(GridPosition gridPosition)
     {
-        return new Vector3(gridPosition._x, 0, gridPosition._z) * _cellSize;
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
     }
+    //If you don't need mathematical, access the GridObjects' GridPosition
+    /// <summary>
+    /// Returns mathematical Grid position by Vector3
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
     public GridPosition GetGridPosition(Vector3 worldPosition)
     {
         return new GridPosition(
             Mathf.RoundToInt(worldPosition.x / _cellSize),
             Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
-    public GridObject GetGridObject(GridPosition gridPosition)
-    {
-        return _gridObjectArray[gridPosition._x, gridPosition._z];
-    }
 
     /// <summary>
-    /// Creates debug Grid Objects
+    /// Creates debug Grid Objects (TESTING ONLY)
     /// </summary>
     /// <param name="debugPrefab"></param>
     public void CreateDebugObjects(Transform debugPrefab)

@@ -12,10 +12,16 @@ public class Unit : MonoBehaviour
 
     private float _stoppingDistance = 0.1f;
     private Vector3 _targetPosition;
+    private GridPosition _currentGridPosition;
 
     private void Awake()
     {
         _targetPosition = transform.position;
+    }
+    private void Start()
+    {
+        _currentGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.AddUnitAtGridPosition(_currentGridPosition, this);
     }
     //updates character movement
     void Update()
@@ -33,9 +39,18 @@ public class Unit : MonoBehaviour
         else
         {
             if (_animator.GetBool("IsWalking"))
+            {
                 _animator.SetBool("IsWalking", false);
+            }
         }
 
+        //Unit changed Grid Position
+        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        if (newGridPosition != _currentGridPosition)
+        {
+            LevelGrid.Instance.UnitMovedGridPosition(_currentGridPosition, this, newGridPosition);
+            _currentGridPosition = newGridPosition;
+        }
     }
 
     /// <summary>
