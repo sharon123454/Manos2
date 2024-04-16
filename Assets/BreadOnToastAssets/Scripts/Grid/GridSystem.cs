@@ -36,25 +36,35 @@ public class GridSystem : MonoBehaviour
 
     }
 
-    public Vector3 GetWorldPosition(int x, int z)
+    public Vector3 GetWorldPosition(GridPosition gridPosition)
     {
-        return new Vector3(x, 0, z) * _cellSize;
+        return new Vector3(gridPosition._x, 0, gridPosition._z) * _cellSize;
     }
-
     public GridPosition GetGridPosition(Vector3 worldPosition)
     {
         return new GridPosition(
             Mathf.RoundToInt(worldPosition.x / _cellSize),
             Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
+    public GridObject GetGridObject(GridPosition gridPosition)
+    {
+        return _gridObjectArray[gridPosition._x, gridPosition._z];
+    }
 
+    /// <summary>
+    /// Creates debug Grid Objects
+    /// </summary>
+    /// <param name="debugPrefab"></param>
     public void CreateDebugObjects(Transform debugPrefab)
     {
         for (int x = 0; x < _width; x++)
         {
             for (int z = 0; z < _height; z++)
             {
-                GameObject.Instantiate(debugPrefab, GetWorldPosition(x, z), Quaternion.identity);
+                GridPosition gridPosition = new GridPosition(x, z);
+                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
+                GridDebugObject debugObject = debugTransform.GetComponent<GridDebugObject>();
+                debugObject.SetGridObject(GetGridObject(gridPosition));
             }
         }
     }
