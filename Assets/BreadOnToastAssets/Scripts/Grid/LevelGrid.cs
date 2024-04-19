@@ -27,7 +27,7 @@ public class LevelGrid : MonoBehaviour
         _gridSystem = new GridSystem(_levelGridWidth, _levelGridHeight, _levelGridCellSize);
 
         if (_gridDebugEnabled)
-            _gridSystem.CreateDebugObjects(_gridDebugObjectPrefab);
+            _gridSystem.CreateDebugObjects(_gridDebugObjectPrefab, transform);
     }
 
     public void UnitMovedGridPosition(GridPosition fromGridPosition, Unit unit, GridPosition toGridPosition)
