@@ -96,9 +96,11 @@ public class CameraController : MonoBehaviour
     }
     private void UpdateRotation()
     {
+        //Q & E vector
         Vector3 rotationVector = InputManager.Instance.GetCameraRotateVector();
-        Vector3 pointerDelta = InputManager.Instance.GetPointerDelta();
 
+        //Handles Right click + mouse movement
+        Vector3 pointerDelta = InputManager.Instance.GetPointerDelta();
         if (InputManager.Instance.RotateRight.inProgress && pointerDelta.x < 0)
             rotationVector.y -= _camOrbitSpeed;
         if (InputManager.Instance.RotateLeft.inProgress && pointerDelta.x > 0)
