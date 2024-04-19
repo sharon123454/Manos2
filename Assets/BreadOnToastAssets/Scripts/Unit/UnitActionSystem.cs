@@ -28,7 +28,7 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.IsMouseButtonDown())
         {
             if (TryRaycastUnitSelection()) { return; }
 
@@ -41,7 +41,7 @@ public class UnitActionSystem : MonoBehaviour
 
     private bool TryRaycastUnitSelection()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetPointerPosition());
         if (Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, _activeUnitLayerMask))
         {
             if (rayCastHit.transform.TryGetComponent<Unit>(out Unit unit))

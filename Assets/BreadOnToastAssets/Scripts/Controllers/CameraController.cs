@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 public class CameraController : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _minZoom = -4f, _maxZoom = 5f;
     [SerializeField] private float _zoomAmount = 1f, _zoomSpeed = 5f, _zoomDampening = 1.5f;
     [SerializeField] private float _lerpDistanceFromUnit = 1.5f, _lerpSpeed = 5f;
-    [SerializeField] private bool _blockScreenEdge = true;
+    [SerializeField] private bool _moveFromScreenEdge = true;
     [Range(0f, 1f)]
     [SerializeField] private float _edgePercentageToMove = 0.009f;
 
@@ -37,7 +39,7 @@ public class CameraController : MonoBehaviour
     private void OnEnable()
     {
         //UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
-        //ManosInputController.Instance.Zoom.performed += ManosInputController_OnZoomChanged;
+        InputManager.Instance.CameraZoom.performed += InputManager_OnZoomChanged;
         _zoomHeight = transform.localPosition.y;
     }
     void Update()
@@ -46,18 +48,18 @@ public class CameraController : MonoBehaviour
         UpdateRotation();
         UpdateZoom();
 
-        if (_blockScreenEdge)
+        if (_moveFromScreenEdge)
             CheckMouseAtScreenEdge();
     }
     private void OnDisable()
     {
-        //ManosInputController.Instance.Zoom.performed -= ManosInputController_OnZoomChanged;
+        InputManager.Instance.CameraZoom.performed -= InputManager_OnZoomChanged;
         //UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
     }
 
     private void CheckMouseAtScreenEdge()
     {
-        Vector2 mousePos = Vector2.zero;//ManosInputController.Instance.GetPointerPosition();
+        Vector2 mousePos = InputManager.Instance.GetPointerPosition();
         Vector3 moveVector = Vector3.zero;
 
         if (mousePos.x < _edgePercentageToMove * Screen.width)
@@ -81,7 +83,7 @@ public class CameraController : MonoBehaviour
     }
     private void UpdateMovement()
     {
-        Vector3 moveVector = Vector3.zero;//ManosInputController.Instance.GetMoveDirection(transform);
+        Vector3 moveVector = InputManager.Instance.GetCameraMoveVector(transform);
 
         if (moveVector == Vector3.zero) { return; }
 
@@ -94,23 +96,21 @@ public class CameraController : MonoBehaviour
     }
     private void UpdateRotation()
     {
-        Vector3 rotationVector = Vector3.zero;//ManosInputController.Instance.GetRotateCamBy();
-        Vector3 pointerDelta = Vector3.zero;//ManosInputController.Instance.PointerDelta.ReadValue<Vector2>();
+        Vector3 rotationVector = InputManager.Instance.GetCameraRotateVector();
+        Vector3 pointerDelta = InputManager.Instance.GetPointerDelta();
 
-        //if (ManosInputController.Instance.RotateRight.inProgress && pointerDelta.x < 0)
-        //    rotationVector.y -= _camOrbitSpeed;
-        //if (ManosInputController.Instance.RotateLeft.inProgress && pointerDelta.x > 0)
-        //    rotationVector.y += _camOrbitSpeed;
+        if (InputManager.Instance.RotateRight.inProgress && pointerDelta.x < 0)
+            rotationVector.y -= _camOrbitSpeed;
+        if (InputManager.Instance.RotateLeft.inProgress && pointerDelta.x > 0)
+            rotationVector.y += _camOrbitSpeed;
 
-        if (rotationVector == Vector3.zero)
-            return;
+        if (rotationVector == Vector3.zero) { return; }
 
         transform.eulerAngles += _camRotationSpeed * Time.deltaTime * rotationVector;
     }
     private void UpdateZoom()
     {
-        if (transform.localPosition.y == _zoomHeight)
-            return;
+        if (transform.localPosition.y == _zoomHeight) { return; }//If no change made to _zoomHeight exit (changes in InputManager_OnZoomChanged)
 
         Vector3 zoomTarget = new Vector3(transform.localPosition.x, _zoomHeight, transform.localPosition.z);
         zoomTarget -= _zoomSpeed * (_zoomHeight - transform.localPosition.y) * _cinemachineVirtualCamera.transform.forward.normalized;
@@ -118,16 +118,16 @@ public class CameraController : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, zoomTarget, Time.deltaTime * _zoomDampening);
     }
 
-    //private void ManosInputController_OnZoomChanged(InputAction.CallbackContext inputValue)
-    //{
-    //    float value = -inputValue.ReadValue<Vector2>().y / 120;//input is 120 so divided to get 1
+    private void InputManager_OnZoomChanged(InputAction.CallbackContext inputValue)
+    {
+        float value = inputValue.ReadValue<float>();
 
-    //    if (Mathf.Abs(value) > 0.1f)
-    //    {
-    //        _zoomHeight += value * _zoomAmount;
-    //        _zoomHeight = Mathf.Clamp(_zoomHeight, _minZoom, _maxZoom);
-    //    }
-    //}
+        if (Mathf.Abs(value) > 0.1f)
+        {
+            _zoomHeight += value * _zoomAmount;
+            _zoomHeight = Mathf.Clamp(_zoomHeight, _minZoom, _maxZoom);
+        }
+    }
     private void UnitActionSystem_OnSelectedUnitChanged(object sender, Unit newlySelectedUnit)
     {
         _lerpCameraCoroutine = StartCoroutine(LerpToUnit(newlySelectedUnit.transform.position));
