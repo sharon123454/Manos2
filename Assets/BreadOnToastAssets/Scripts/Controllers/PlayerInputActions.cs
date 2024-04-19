@@ -37,15 +37,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""CameraZoom"",
-                    ""type"": ""Value"",
-                    ""id"": ""07832759-ed08-4a60-890f-889dcc9fecd5"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""CameraRotate"",
                     ""type"": ""Value"",
                     ""id"": ""13a22249-690e-4ccf-b096-505f6fae39d3"",
@@ -55,10 +46,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""PointerDelta"",
+                    ""name"": ""CameraZoom"",
                     ""type"": ""Value"",
-                    ""id"": ""fa868e95-70e3-40ca-ae0a-54e7b2f07ae1"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""id"": ""07832759-ed08-4a60-890f-889dcc9fecd5"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -82,15 +73,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NumberKey"",
-                    ""type"": ""Value"",
-                    ""id"": ""e3dedc51-7c88-4b23-ac52-0aa5e2333032"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""SwitchSelectedPlayer"",
                     ""type"": ""Button"",
                     ""id"": ""1022ca5c-fb21-406c-bfad-63875ec44605"",
@@ -100,6 +82,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""NumberKey"",
+                    ""type"": ""Value"",
+                    ""id"": ""e3dedc51-7c88-4b23-ac52-0aa5e2333032"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""ab7183d6-3407-4ad4-8356-4076501bf18b"",
@@ -107,15 +98,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PointerPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""04253b71-03b0-4734-b497-4b2581cde658"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Space"",
@@ -277,50 +259,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Q & E"",
-                    ""id"": ""efd3f07c-264e-4cd1-8b7d-481780c51887"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""40160e24-f5d1-45a5-a88e-0351616002c2"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""0809e918-501f-4e86-9cb0-b8d0a2baf1c2"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e73de3c6-4aa6-4d3f-92e4-38e505f524a1"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PointerDelta"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": """",
                     ""id"": ""928989f2-0ecc-4ced-b280-e823135515e1"",
                     ""path"": ""<Mouse>/rightButton"",
@@ -454,34 +392,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8816107e-404d-49dd-9160-4d230c00fc4a"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchSelectedPlayer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c0b3eadb-8625-4293-a635-d4cabb4fbad4"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0e36512b-3c16-4da2-a9b7-e77217ea7dc9"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -528,6 +444,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8816107e-404d-49dd-9160-4d230c00fc4a"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchSelectedPlayer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Q & E"",
+                    ""id"": ""efd3f07c-264e-4cd1-8b7d-481780c51887"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""40160e24-f5d1-45a5-a88e-0351616002c2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0809e918-501f-4e86-9cb0-b8d0a2baf1c2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -537,15 +497,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_CameraMovement = m_Player.FindAction("CameraMovement", throwIfNotFound: true);
-        m_Player_CameraZoom = m_Player.FindAction("CameraZoom", throwIfNotFound: true);
         m_Player_CameraRotate = m_Player.FindAction("CameraRotate", throwIfNotFound: true);
-        m_Player_PointerDelta = m_Player.FindAction("PointerDelta", throwIfNotFound: true);
+        m_Player_CameraZoom = m_Player.FindAction("CameraZoom", throwIfNotFound: true);
         m_Player_RotateRight = m_Player.FindAction("RotateRight", throwIfNotFound: true);
         m_Player_RotateLeft = m_Player.FindAction("RotateLeft", throwIfNotFound: true);
-        m_Player_NumberKey = m_Player.FindAction("NumberKey", throwIfNotFound: true);
         m_Player_SwitchSelectedPlayer = m_Player.FindAction("SwitchSelectedPlayer", throwIfNotFound: true);
+        m_Player_NumberKey = m_Player.FindAction("NumberKey", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
         m_Player_Space = m_Player.FindAction("Space", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_HighlightInfo = m_Player.FindAction("HighlightInfo", throwIfNotFound: true);
@@ -612,15 +570,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_CameraMovement;
-    private readonly InputAction m_Player_CameraZoom;
     private readonly InputAction m_Player_CameraRotate;
-    private readonly InputAction m_Player_PointerDelta;
+    private readonly InputAction m_Player_CameraZoom;
     private readonly InputAction m_Player_RotateRight;
     private readonly InputAction m_Player_RotateLeft;
-    private readonly InputAction m_Player_NumberKey;
     private readonly InputAction m_Player_SwitchSelectedPlayer;
+    private readonly InputAction m_Player_NumberKey;
     private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_PointerPosition;
     private readonly InputAction m_Player_Space;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_HighlightInfo;
@@ -630,15 +586,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraMovement => m_Wrapper.m_Player_CameraMovement;
-        public InputAction @CameraZoom => m_Wrapper.m_Player_CameraZoom;
         public InputAction @CameraRotate => m_Wrapper.m_Player_CameraRotate;
-        public InputAction @PointerDelta => m_Wrapper.m_Player_PointerDelta;
+        public InputAction @CameraZoom => m_Wrapper.m_Player_CameraZoom;
         public InputAction @RotateRight => m_Wrapper.m_Player_RotateRight;
         public InputAction @RotateLeft => m_Wrapper.m_Player_RotateLeft;
-        public InputAction @NumberKey => m_Wrapper.m_Player_NumberKey;
         public InputAction @SwitchSelectedPlayer => m_Wrapper.m_Player_SwitchSelectedPlayer;
+        public InputAction @NumberKey => m_Wrapper.m_Player_NumberKey;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
         public InputAction @Space => m_Wrapper.m_Player_Space;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @HighlightInfo => m_Wrapper.m_Player_HighlightInfo;
@@ -655,33 +609,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CameraMovement.started += instance.OnCameraMovement;
             @CameraMovement.performed += instance.OnCameraMovement;
             @CameraMovement.canceled += instance.OnCameraMovement;
-            @CameraZoom.started += instance.OnCameraZoom;
-            @CameraZoom.performed += instance.OnCameraZoom;
-            @CameraZoom.canceled += instance.OnCameraZoom;
             @CameraRotate.started += instance.OnCameraRotate;
             @CameraRotate.performed += instance.OnCameraRotate;
             @CameraRotate.canceled += instance.OnCameraRotate;
-            @PointerDelta.started += instance.OnPointerDelta;
-            @PointerDelta.performed += instance.OnPointerDelta;
-            @PointerDelta.canceled += instance.OnPointerDelta;
+            @CameraZoom.started += instance.OnCameraZoom;
+            @CameraZoom.performed += instance.OnCameraZoom;
+            @CameraZoom.canceled += instance.OnCameraZoom;
             @RotateRight.started += instance.OnRotateRight;
             @RotateRight.performed += instance.OnRotateRight;
             @RotateRight.canceled += instance.OnRotateRight;
             @RotateLeft.started += instance.OnRotateLeft;
             @RotateLeft.performed += instance.OnRotateLeft;
             @RotateLeft.canceled += instance.OnRotateLeft;
-            @NumberKey.started += instance.OnNumberKey;
-            @NumberKey.performed += instance.OnNumberKey;
-            @NumberKey.canceled += instance.OnNumberKey;
             @SwitchSelectedPlayer.started += instance.OnSwitchSelectedPlayer;
             @SwitchSelectedPlayer.performed += instance.OnSwitchSelectedPlayer;
             @SwitchSelectedPlayer.canceled += instance.OnSwitchSelectedPlayer;
+            @NumberKey.started += instance.OnNumberKey;
+            @NumberKey.performed += instance.OnNumberKey;
+            @NumberKey.canceled += instance.OnNumberKey;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            @PointerPosition.started += instance.OnPointerPosition;
-            @PointerPosition.performed += instance.OnPointerPosition;
-            @PointerPosition.canceled += instance.OnPointerPosition;
             @Space.started += instance.OnSpace;
             @Space.performed += instance.OnSpace;
             @Space.canceled += instance.OnSpace;
@@ -701,33 +649,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CameraMovement.started -= instance.OnCameraMovement;
             @CameraMovement.performed -= instance.OnCameraMovement;
             @CameraMovement.canceled -= instance.OnCameraMovement;
-            @CameraZoom.started -= instance.OnCameraZoom;
-            @CameraZoom.performed -= instance.OnCameraZoom;
-            @CameraZoom.canceled -= instance.OnCameraZoom;
             @CameraRotate.started -= instance.OnCameraRotate;
             @CameraRotate.performed -= instance.OnCameraRotate;
             @CameraRotate.canceled -= instance.OnCameraRotate;
-            @PointerDelta.started -= instance.OnPointerDelta;
-            @PointerDelta.performed -= instance.OnPointerDelta;
-            @PointerDelta.canceled -= instance.OnPointerDelta;
+            @CameraZoom.started -= instance.OnCameraZoom;
+            @CameraZoom.performed -= instance.OnCameraZoom;
+            @CameraZoom.canceled -= instance.OnCameraZoom;
             @RotateRight.started -= instance.OnRotateRight;
             @RotateRight.performed -= instance.OnRotateRight;
             @RotateRight.canceled -= instance.OnRotateRight;
             @RotateLeft.started -= instance.OnRotateLeft;
             @RotateLeft.performed -= instance.OnRotateLeft;
             @RotateLeft.canceled -= instance.OnRotateLeft;
-            @NumberKey.started -= instance.OnNumberKey;
-            @NumberKey.performed -= instance.OnNumberKey;
-            @NumberKey.canceled -= instance.OnNumberKey;
             @SwitchSelectedPlayer.started -= instance.OnSwitchSelectedPlayer;
             @SwitchSelectedPlayer.performed -= instance.OnSwitchSelectedPlayer;
             @SwitchSelectedPlayer.canceled -= instance.OnSwitchSelectedPlayer;
+            @NumberKey.started -= instance.OnNumberKey;
+            @NumberKey.performed -= instance.OnNumberKey;
+            @NumberKey.canceled -= instance.OnNumberKey;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            @PointerPosition.started -= instance.OnPointerPosition;
-            @PointerPosition.performed -= instance.OnPointerPosition;
-            @PointerPosition.canceled -= instance.OnPointerPosition;
             @Space.started -= instance.OnSpace;
             @Space.performed -= instance.OnSpace;
             @Space.canceled -= instance.OnSpace;
@@ -760,15 +702,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnCameraMovement(InputAction.CallbackContext context);
-        void OnCameraZoom(InputAction.CallbackContext context);
         void OnCameraRotate(InputAction.CallbackContext context);
-        void OnPointerDelta(InputAction.CallbackContext context);
+        void OnCameraZoom(InputAction.CallbackContext context);
         void OnRotateRight(InputAction.CallbackContext context);
         void OnRotateLeft(InputAction.CallbackContext context);
-        void OnNumberKey(InputAction.CallbackContext context);
         void OnSwitchSelectedPlayer(InputAction.CallbackContext context);
+        void OnNumberKey(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnPointerPosition(InputAction.CallbackContext context);
         void OnSpace(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHighlightInfo(InputAction.CallbackContext context);

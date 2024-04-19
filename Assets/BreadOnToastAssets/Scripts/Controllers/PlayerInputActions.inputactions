@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "CameraZoom",
-                    "type": "Value",
-                    "id": "07832759-ed08-4a60-890f-889dcc9fecd5",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "CameraRotate",
                     "type": "Value",
                     "id": "13a22249-690e-4ccf-b096-505f6fae39d3",
@@ -33,10 +24,10 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "PointerDelta",
+                    "name": "CameraZoom",
                     "type": "Value",
-                    "id": "fa868e95-70e3-40ca-ae0a-54e7b2f07ae1",
-                    "expectedControlType": "Vector2",
+                    "id": "07832759-ed08-4a60-890f-889dcc9fecd5",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -60,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NumberKey",
-                    "type": "Value",
-                    "id": "e3dedc51-7c88-4b23-ac52-0aa5e2333032",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "SwitchSelectedPlayer",
                     "type": "Button",
                     "id": "1022ca5c-fb21-406c-bfad-63875ec44605",
@@ -78,6 +60,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "NumberKey",
+                    "type": "Value",
+                    "id": "e3dedc51-7c88-4b23-ac52-0aa5e2333032",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "ab7183d6-3407-4ad4-8356-4076501bf18b",
@@ -85,15 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "PointerPosition",
-                    "type": "Value",
-                    "id": "04253b71-03b0-4734-b497-4b2581cde658",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
                 {
                     "name": "Space",
@@ -255,50 +237,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Q & E",
-                    "id": "efd3f07c-264e-4cd1-8b7d-481780c51887",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "40160e24-f5d1-45a5-a88e-0351616002c2",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "0809e918-501f-4e86-9cb0-b8d0a2baf1c2",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "e73de3c6-4aa6-4d3f-92e4-38e505f524a1",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PointerDelta",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "",
                     "id": "928989f2-0ecc-4ced-b280-e823135515e1",
                     "path": "<Mouse>/rightButton",
@@ -432,34 +370,12 @@
                 },
                 {
                     "name": "",
-                    "id": "8816107e-404d-49dd-9160-4d230c00fc4a",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchSelectedPlayer",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c0b3eadb-8625-4293-a635-d4cabb4fbad4",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0e36512b-3c16-4da2-a9b7-e77217ea7dc9",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -506,6 +422,50 @@
                     "action": "Test",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8816107e-404d-49dd-9160-4d230c00fc4a",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchSelectedPlayer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Q & E",
+                    "id": "efd3f07c-264e-4cd1-8b7d-481780c51887",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "40160e24-f5d1-45a5-a88e-0351616002c2",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "0809e918-501f-4e86-9cb0-b8d0a2baf1c2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

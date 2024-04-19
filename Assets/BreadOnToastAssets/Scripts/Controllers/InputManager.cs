@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
@@ -12,8 +10,10 @@ public class InputManager : MonoBehaviour
     internal InputAction RotateRight { get; private set; }
 
     //Questionable
+    internal InputAction Test { get; private set; }
     internal InputAction Space { get; private set; }
     internal InputAction Pause { get; private set; }
+    internal InputAction Interact { get; private set; }
     internal InputAction NumberKey { get; private set; }
     internal InputAction HighlightInfo { get; private set; }
     internal InputAction SwitchSelectedPlayer { get; private set; }
@@ -37,8 +37,10 @@ public class InputManager : MonoBehaviour
         RotateLeft = _playerInputActions.Player.RotateLeft;
         RotateRight = _playerInputActions.Player.RotateRight;
 
+        Test = _playerInputActions.Player.Test;
         Space = _playerInputActions.Player.Space;
         Pause = _playerInputActions.Player.Pause;
+        Interact = _playerInputActions.Player.Interact;
         NumberKey = _playerInputActions.Player.NumberKey;
         HighlightInfo = _playerInputActions.Player.HighlightInfo;
         SwitchSelectedPlayer = _playerInputActions.Player.SwitchSelectedPlayer;
@@ -56,7 +58,7 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public Vector3 GetPointerPosition() { return Mouse.current.position.ReadValue(); }
-    public Vector3 GetPointerDelta() { return _playerInputActions.Player.PointerDelta.ReadValue<Vector2>(); }
+    public Vector3 GetPointerDelta() { return Mouse.current.delta.ReadValue(); }
 
     public Vector3 GetCameraMoveVector(Transform movingObject)
     {
