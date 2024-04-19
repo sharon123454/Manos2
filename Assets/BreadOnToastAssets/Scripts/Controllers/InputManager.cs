@@ -50,8 +50,8 @@ public class InputManager : MonoBehaviour
         _playerInputActions.Player.Disable();
     }
 
-    public bool IsMouseButtonDown() { return Mouse.current.leftButton.isPressed; }
-    public bool IsRightMouseButtonDown() { return Mouse.current.rightButton.isPressed; }
+    public bool IsMouseButtonDown() { return Mouse.current.leftButton.wasPressedThisFrame; }
+    public bool IsRightMouseButtonDown() { return Mouse.current.rightButton.wasPressedThisFrame; }
 
     /// <summary>
     /// Returns the mouse screen position
