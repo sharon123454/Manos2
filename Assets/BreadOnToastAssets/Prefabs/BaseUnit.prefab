@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 6809665196241624993}
   - component: {fileID: 8989444064761155123}
   - component: {fileID: 7339070871257945448}
+  - component: {fileID: 33582428085636162}
   m_Layer: 6
   m_Name: BaseUnit
   m_TagString: Untagged
@@ -144,9 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236f08365a8aa21428f6b0975214bde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 5718055997175225877}
-  _unitRotationSpeed: 10
-  _unitMoveSpeed: 6.2
 --- !u!65 &7339070871257945448
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -168,6 +166,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9, y: 2.3, z: 0.9}
   m_Center: {x: 0, y: 1.15, z: 0}
+--- !u!114 &33582428085636162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546399621768341872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0baa39076194b6488bf1849b786e3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5718055997175225877}
+  _unitRotationSpeed: 10
+  _unitMoveSpeed: 6.2
 --- !u!1001 &423914768460296307
 PrefabInstance:
   m_ObjectHideFlags: 0

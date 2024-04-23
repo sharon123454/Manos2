@@ -33,7 +33,7 @@ public class UnitActionSystem : MonoBehaviour
             if (TryRaycastUnitSelection()) { return; }
 
             if (_selectedUnit != null)
-                _selectedUnit.Move(MouseWorld.GetPosition());
+                _selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
         }
     }
 
