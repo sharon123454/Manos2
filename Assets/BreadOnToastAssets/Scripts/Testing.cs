@@ -12,7 +12,10 @@ public class Testing : MonoBehaviour
 
     private void Update()
     {
-        
+        if (InputManager.Instance.Test.WasPressedThisFrame())
+        {
+
+        }
     }
 
 }

@@ -28,6 +28,15 @@ public class Unit : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Allows Actions to get the units GridPosition without calculations
+    /// </summary>
+    /// <returns></returns>
+    public GridPosition GetGridPosition() { return _currentGridPosition; }
+    /// <summary>
+    /// Allows UnitActionSystem to reach the Units' Action
+    /// </summary>
+    /// <returns></returns>
     public MoveAction GetMoveAction() { return _moveAction; }
 
 }

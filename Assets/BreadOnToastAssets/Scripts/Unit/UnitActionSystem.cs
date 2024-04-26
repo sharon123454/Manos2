@@ -39,6 +39,11 @@ public class UnitActionSystem : MonoBehaviour
 
     public Unit GetSelectedUnit() { return _selectedUnit; }
 
+    private void SetSelectedUnit(Unit unit)
+    {
+        _selectedUnit = unit;
+        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+    }
     private bool TryRaycastUnitSelection()
     {
         Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetPointerPosition());
@@ -51,11 +56,6 @@ public class UnitActionSystem : MonoBehaviour
             }
         }
         return false;
-    }
-    private void SetSelectedUnit(Unit unit)
-    {
-        _selectedUnit = unit;
-        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 
 }
