@@ -40,7 +40,7 @@ public class LevelGrid : MonoBehaviour
         GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
         return gridObject.GetUnitList();
     }
-    
+
     #region grid validation methods
     /// <summary>
     /// Returns true if grid position is inside the grid systems' area.
@@ -105,6 +105,16 @@ public class LevelGrid : MonoBehaviour
     {
         return _gridSystem.GetWorldPosition(gridPosition);
     }
+    /// <summary>
+    /// Getting this levels' gridSystem width
+    /// </summary>
+    /// <returns></returns>
+    public int GetGridWidth() { return _gridSystem.GetGridWidth(); }
+    /// <summary>
+    /// Getting this levels' gridSystem height
+    /// </summary>
+    /// <returns></returns>
+    public int GetGridHeight() { return _gridSystem.GetGridHeight(); }
     #endregion
 
 }

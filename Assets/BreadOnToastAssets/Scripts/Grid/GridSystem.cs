@@ -41,8 +41,11 @@ public class GridSystem
         }
     }
 
+    public int GetGridWidth() { return _width; }
+    public int GetGridHeight() { return _height; }
     /// <summary>
     /// Returns the Object which sits on given Grid
+    /// Holds actual grid data
     /// </summary>
     /// <param name="gridPosition"></param>
     /// <returns></returns>
