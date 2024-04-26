@@ -30,10 +30,18 @@ public class UnitActionSystem : MonoBehaviour
     {
         if (InputManager.Instance.IsMouseButtonDown())
         {
+            //Handles clicked character
             if (TryRaycastUnitSelection()) { return; }
 
-            if (_selectedUnit != null)
-                _selectedUnit.GetMoveAction().Move(MouseWorld.GetPosition());
+            //Stops unit logic if no Unit selected
+            if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
+
+            //Handles clicked input
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            if (_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+                _selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            else
+                Debug.Log("Position clicked isn't valid");
         }
     }
 

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System;
 
@@ -54,6 +52,19 @@ public class GridSystem
     }
 
     /// <summary>
+    /// Returns true if grid position is inside the grid systems' area
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition.x >= 0 &&
+                gridPosition.z >= 0 &&
+                gridPosition.x < _width &&
+                gridPosition.z < _height;
+    }
+
+    /// <summary>
     /// Returns mathematical World position by grid
     /// </summary>
     /// <param name="gridPosition"></param>
@@ -74,6 +85,7 @@ public class GridSystem
             Mathf.RoundToInt(worldPosition.x / _cellSize),
             Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
+
 
     /// <summary>
     /// Creates debug Grid Objects (TESTING ONLY)

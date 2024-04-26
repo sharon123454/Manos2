@@ -16,6 +16,8 @@ public class GridObject
     }
 
     public List<Unit> GetUnitList() { return _gridUnitList; }
+    public bool HasAnyUnits() { return _gridUnitList.Count > 0; }
+
     public void AddUnit(Unit unit) { _gridUnitList.Add(unit); }
     public void RemoveUnit(Unit unit) { _gridUnitList.Remove(unit); }
 

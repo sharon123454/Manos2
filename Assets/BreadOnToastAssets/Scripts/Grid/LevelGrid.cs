@@ -30,29 +30,65 @@ public class LevelGrid : MonoBehaviour
             _gridSystem.CreateDebugObjects(_gridDebugObjectPrefab, transform);
     }
 
+    /// <summary>
+    /// Accesses the GridObject in the position and returns the Units
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
+        return gridObject.GetUnitList();
+    }
+    
+    #region grid validation methods
+    /// <summary>
+    /// Returns true if grid position is inside the grid systems' area.
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return _gridSystem.IsValidGridPosition(gridPosition);
+    }
+    /// <summary>
+    /// Returns true if grid position is occupied by other unit
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public bool HasAnyUnitOnGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
+        return gridObject.HasAnyUnits();
+    }
+    #endregion
+
+    /// <summary>
+    /// Concise Move unit method
+    /// </summary>
+    /// <param name="fromGridPosition"></param>
+    /// <param name="unit"></param>
+    /// <param name="toGridPosition"></param>
     public void UnitMovedGridPosition(GridPosition fromGridPosition, Unit unit, GridPosition toGridPosition)
     {
         RemoveUnitAtGridPosition(fromGridPosition, unit);
         AddUnitAtGridPosition(toGridPosition, unit);
+    }
+    //Need to change to private v ?
+    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit)
+    {
+        GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
+        gridObject.RemoveUnit(unit);
     }
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit)
     {
         GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
         gridObject.AddUnit(unit);
     }
-    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition)
-    {
-        GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
-        return gridObject.GetUnitList();
-    }
-    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit)
-    {
-        GridObject gridObject = _gridSystem.GetGridObject(gridPosition);
-        gridObject.RemoveUnit(unit);
-    }
 
+    #region Passing data from local active gridSystem
     /// <summary>
-    /// Passing the mathematical gridPosition from the GridSystem
+    /// Getting numerical GridPosition from the GridSystem
     /// </summary>
     /// <param name="worldPosition"></param>
     /// <returns></returns>
@@ -60,5 +96,15 @@ public class LevelGrid : MonoBehaviour
     {
         return _gridSystem.GetGridPosition(worldPosition);
     }
+    /// <summary>
+    /// Getting gridPosition in worldPosition vector from GridSystem
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    /// <returns></returns>
+    public Vector3 GetWorldPosition(GridPosition gridPosition)
+    {
+        return _gridSystem.GetWorldPosition(gridPosition);
+    }
+    #endregion
 
 }

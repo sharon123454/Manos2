@@ -41,7 +41,32 @@ public class MoveAction : MonoBehaviour
         }
     }
 
-    public List<GridPosition> GetValidActionGridPositionList()
+    /// <summary>
+    /// Sets the units target position.
+    /// Unit will move if Update allowes
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    public void Move(GridPosition targetPosition)
+    {
+        _targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
+    }
+
+    /// <summary>
+    /// Checks if grid selected by input is valid for specific action
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public bool IsValidActionGridPosition(GridPosition gridPosition)
+    {
+        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+        return validGridPositionList.Contains(gridPosition);
+    }
+
+    /// <summary>
+    /// Validation of the actions' grid
+    /// </summary>
+    /// <returns></returns>
+    private List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = _unit.GetGridPosition();
@@ -53,21 +78,15 @@ public class MoveAction : MonoBehaviour
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                Debug.Log(testGridPosition);
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) { continue; } //if position is outside the gridSystem
+                if (unitGridPosition == testGridPosition) { continue; } //if position is the same as units'
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) { continue; } //if position is occupied by other unit
+
+                validGridPositions.Add(testGridPosition);
             }
         }
 
         return validGridPositions;
-    }
-
-    /// <summary>
-    /// Sets the units target position.
-    /// Unit will move if Update allowes
-    /// </summary>
-    /// <param name="targetPosition"></param>
-    public void Move(Vector3 targetPosition)
-    {
-        _targetPosition = targetPosition;
     }
 
 }
