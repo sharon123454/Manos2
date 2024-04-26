@@ -66,7 +66,7 @@ public class MoveAction : MonoBehaviour
     /// Validation of the actions' grid
     /// </summary>
     /// <returns></returns>
-    private List<GridPosition> GetValidActionGridPositionList()
+    public List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = _unit.GetGridPosition();
