@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class SpinAction : BaseAction
 {
@@ -15,11 +16,15 @@ public class SpinAction : BaseAction
 
         _totalSpinAmount += spinAmount;
         if (_totalSpinAmount >= 360)
+        {
             _isActive = false;
+            _onActionComplete();
+        }
     }
-    public void Spin()
+    public void Spin(Action onActionComplete)
     {
         _isActive = true;
         _totalSpinAmount = 0;
+        _onActionComplete = onActionComplete;
     }
 }

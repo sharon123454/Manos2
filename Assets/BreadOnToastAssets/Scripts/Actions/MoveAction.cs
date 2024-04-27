@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class MoveAction : BaseAction
 {
@@ -38,6 +39,7 @@ public class MoveAction : BaseAction
             {
                 _animator.SetBool("IsWalking", false);
                 _isActive = false;
+                _onActionComplete();
             }
         }
 
@@ -50,9 +52,10 @@ public class MoveAction : BaseAction
     /// Unit will move if Update allowes
     /// </summary>
     /// <param name="targetPosition"></param>
-    public void Move(GridPosition targetPosition)
+    public void Move(GridPosition targetPosition, Action onActionComplete)
     {
         _targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
+        _onActionComplete = onActionComplete;
         _isActive = true;
     }
 

@@ -13,6 +13,7 @@ public class UnitActionSystem : MonoBehaviour
     private LayerMask _activeUnitLayerMask;
 
     private Unit _selectedUnit;
+    private bool _isBusy;
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void Update()
     {
+        if (_isBusy) { return; }
+
         if (InputManager.Instance.IsMouseButtonDown())
         {
             //Handles clicked character
@@ -39,13 +42,20 @@ public class UnitActionSystem : MonoBehaviour
             //Handles clicked input
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             if (_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
-                _selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            {
+                SetBusy();
+                _selectedUnit.GetMoveAction().Move(mouseGridPosition, ClearBusy);
+            }
             else
+            {
                 Debug.Log("Position clicked isn't valid");
+            }
         }
+
         if (InputManager.Instance.IsRightMouseButtonDown())
         {
-            GetSelectedUnit().GetSpinAction().Spin();
+            SetBusy();
+            GetSelectedUnit().GetSpinAction().Spin(ClearBusy);
         }
     }
 
@@ -69,5 +79,7 @@ public class UnitActionSystem : MonoBehaviour
         }
         return false;
     }
+    private void SetBusy() { _isBusy = true; }
+    private void ClearBusy() { _isBusy = false; }
 
 }
