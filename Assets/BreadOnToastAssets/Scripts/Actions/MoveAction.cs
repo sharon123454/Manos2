@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private Animator _animator;
 
@@ -13,32 +13,36 @@ public class MoveAction : MonoBehaviour
 
     private float _stoppingDistance = 0.1f;
     private Vector3 _targetPosition;
-    private Unit _unit;
 
-    private void Awake()
+    protected override void Awake()
     {
-        _unit = GetComponent<Unit>();
+        base.Awake();
         _targetPosition = transform.position;
     }
     private void Update()
     {
+        if (!_isActive) return;
+
+        Vector3 moveDir = (_targetPosition - transform.position).normalized;
+
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)//Stops jittering from never reaching clean position
         {
             //Animation
             _animator.SetBool("IsWalking", true);
             //Movement
-            Vector3 moveDir = (_targetPosition - transform.position).normalized;
             transform.position += moveDir * _unitMoveSpeed * Time.deltaTime;
-            //Rotation (smooth rotation because starting point isn't cached)
-            transform.forward = Vector3.Lerp(transform.forward, moveDir, _unitRotationSpeed * Time.deltaTime);
         }
         else
         {
             if (_animator.GetBool("IsWalking"))
             {
                 _animator.SetBool("IsWalking", false);
+                _isActive = false;
             }
         }
+
+        //Rotation (smooth rotation because starting point isn't cached)
+        transform.forward = Vector3.Lerp(transform.forward, moveDir, _unitRotationSpeed * Time.deltaTime);
     }
 
     /// <summary>
@@ -49,6 +53,7 @@ public class MoveAction : MonoBehaviour
     public void Move(GridPosition targetPosition)
     {
         _targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
+        _isActive = true;
     }
 
     /// <summary>

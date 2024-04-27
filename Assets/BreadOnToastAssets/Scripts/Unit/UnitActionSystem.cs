@@ -43,6 +43,10 @@ public class UnitActionSystem : MonoBehaviour
             else
                 Debug.Log("Position clicked isn't valid");
         }
+        if (InputManager.Instance.IsRightMouseButtonDown())
+        {
+            GetSelectedUnit().GetSpinAction().Spin();
+        }
     }
 
     public Unit GetSelectedUnit() { return _selectedUnit; }
