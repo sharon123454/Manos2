@@ -5,6 +5,8 @@ using System;
 
 public abstract class BaseAction : MonoBehaviour
 {
+    [SerializeField] protected string _actionName;
+
     protected Action _onActionComplete;
     protected bool _isActive;
     protected Unit _unit;
@@ -13,5 +15,7 @@ public abstract class BaseAction : MonoBehaviour
     {
         _unit = GetComponent<Unit>();
     }
+
+    public virtual string GetActionName() { return _actionName; }
 
 }
