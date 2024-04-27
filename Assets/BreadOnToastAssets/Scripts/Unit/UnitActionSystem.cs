@@ -29,7 +29,7 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void Update()
     {
-        if (_isBusy) { return; }
+        if (_isBusy) { Debug.Log("Unit is busy"); return; }
 
         if (InputManager.Instance.IsMouseButtonDown())
         {
@@ -54,6 +54,9 @@ public class UnitActionSystem : MonoBehaviour
 
         if (InputManager.Instance.IsRightMouseButtonDown())
         {
+            //Stops unit logic if no Unit selected
+            if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
+
             SetBusy();
             GetSelectedUnit().GetSpinAction().Spin(ClearBusy);
         }
