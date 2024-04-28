@@ -12,6 +12,7 @@ public class UnitActionSystem : MonoBehaviour
     private string[] _activeLayerNames = { "Unit" };
     private LayerMask _activeUnitLayerMask;
 
+    private BaseAction _selectedAction;
     private Unit _selectedUnit;
     private bool _isBusy;
 
@@ -29,55 +30,65 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void Update()
     {
+        //place under line 37 to allow switching characters mid action
         if (_isBusy) { Debug.Log("Unit is busy"); return; }
 
-        if (InputManager.Instance.IsMouseButtonDown())
-        {
-            //Handles clicked character
-            if (TryRaycastUnitSelection()) { return; }
+        //Handles clicked character
+        if (TryRaycastUnitSelection()) { return; }
 
-            //Stops unit logic if no Unit selected
-            if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
-
-            //Handles clicked input
-            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            if (_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
-            {
-                SetBusy();
-                _selectedUnit.GetMoveAction().Move(mouseGridPosition, ClearBusy);
-            }
-            else
-            {
-                Debug.Log("Position clicked isn't valid");
-            }
-        }
-
-        if (InputManager.Instance.IsRightMouseButtonDown())
-        {
-            //Stops unit logic if no Unit selected
-            if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
-
-            SetBusy();
-            GetSelectedUnit().GetSpinAction().Spin(ClearBusy);
-        }
+        HandleSelectedAction();
     }
 
     public Unit GetSelectedUnit() { return _selectedUnit; }
-
+    public void SetSelectedAction(BaseAction action) { _selectedAction = action; }
     private void SetSelectedUnit(Unit unit)
     {
         _selectedUnit = unit;
+        SetSelectedAction(_selectedUnit.GetMoveAction());
+
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void HandleSelectedAction()
+    {
+        //Stops action logic if no Unit selected
+        if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
+
+        if (InputManager.Instance.IsMouseButtonDown())
+        {
+            switch (_selectedAction)
+            {
+                case MoveAction moveAction:
+                    GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+                    if (moveAction.IsValidActionGridPosition(mouseGridPosition))
+                    {
+                        SetBusy();
+                        moveAction.Move(mouseGridPosition, ClearBusy);
+                    }
+                    else { Debug.Log("Position clicked isn't valid"); }
+                    break;
+                case SpinAction spinAction:
+                    SetBusy();
+                    spinAction.Spin(ClearBusy);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     private bool TryRaycastUnitSelection()
     {
-        Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetPointerPosition());
-        if (Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, _activeUnitLayerMask))
+        if (InputManager.Instance.IsMouseButtonDown())
         {
-            if (rayCastHit.transform.TryGetComponent<Unit>(out Unit unit))
+            Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetPointerPosition());
+            if (Physics.Raycast(ray, out RaycastHit rayCastHit, float.MaxValue, _activeUnitLayerMask))
             {
-                SetSelectedUnit(unit);
-                return true;
+                if (rayCastHit.transform.TryGetComponent<Unit>(out Unit unit))
+                {
+                    SetSelectedUnit(unit);
+                    return true;
+                }
             }
         }
         return false;

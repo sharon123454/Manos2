@@ -13,6 +13,7 @@ public class ActionButtonUI : MonoBehaviour
     public void SetBaseAction(BaseAction baseAction)
     {
         _actionNameText.text = baseAction.GetActionName();
+        _actionButton.onClick.AddListener(() => { UnitActionSystem.Instance.SetSelectedAction(baseAction); });
     }
 
 }
