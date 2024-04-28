@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine;
 using System;
@@ -33,6 +34,9 @@ public class UnitActionSystem : MonoBehaviour
         //place under line 37 to allow switching characters mid action
         if (_isBusy) { Debug.Log("Unit is busy"); return; }
 
+        //Checks if pointer is above UI
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
+
         //Handles clicked character
         if (TryRaycastUnitSelection()) { return; }
 
@@ -40,6 +44,7 @@ public class UnitActionSystem : MonoBehaviour
     }
 
     public Unit GetSelectedUnit() { return _selectedUnit; }
+    public BaseAction GetSelectedAction() { return _selectedAction; }
     public void SetSelectedAction(BaseAction action) { _selectedAction = action; }
     private void SetSelectedUnit(Unit unit)
     {
@@ -51,31 +56,45 @@ public class UnitActionSystem : MonoBehaviour
 
     private void HandleSelectedAction()
     {
-        //Stops action logic if no Unit selected
-        if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
-
         if (InputManager.Instance.IsMouseButtonDown())
         {
-            switch (_selectedAction)
-            {
-                case MoveAction moveAction:
-                    GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            //Stops action logic if no Unit selected
+            if (GetSelectedUnit() == null) { Debug.Log("No unit is selected"); return; }
 
-                    if (moveAction.IsValidActionGridPosition(mouseGridPosition))
-                    {
-                        SetBusy();
-                        moveAction.Move(mouseGridPosition, ClearBusy);
-                    }
-                    else { Debug.Log("Position clicked isn't valid"); }
-                    break;
-                case SpinAction spinAction:
-                    SetBusy();
-                    spinAction.Spin(ClearBusy);
-                    break;
-                default:
-                    break;
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+            if (GetSelectedAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                SetBusy();
+                GetSelectedAction().TakeAction(mouseGridPosition, ClearBusy);
             }
+            else { Debug.Log("Position clicked isn't valid"); }
         }
+
+        #region deprecated conversion of baseAction to inhereting Action, call to TakeAction
+        //if (InputManager.Instance.IsMouseButtonDown())
+        //{
+        //    switch (_selectedAction)
+        //    {
+        //        case MoveAction moveAction:
+        //            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+        //            if (moveAction.IsValidActionGridPosition(mouseGridPosition))
+        //            {
+        //                SetBusy();
+        //                moveAction.Move(mouseGridPosition, ClearBusy);
+        //            }
+        //            else { Debug.Log("Position clicked isn't valid"); }
+        //            break;
+        //        case SpinAction spinAction:
+        //            SetBusy();
+        //            spinAction.Spin(ClearBusy);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+        #endregion
     }
     private bool TryRaycastUnitSelection()
     {
@@ -86,6 +105,8 @@ public class UnitActionSystem : MonoBehaviour
             {
                 if (rayCastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
+                    if (GetSelectedUnit() == unit) { return false; }
+
                     SetSelectedUnit(unit);
                     return true;
                 }

@@ -52,29 +52,13 @@ public class MoveAction : BaseAction
     /// Unit will move if Update allowes
     /// </summary>
     /// <param name="targetPosition"></param>
-    public void Move(GridPosition targetPosition, Action onActionComplete)
+    public override void TakeAction(GridPosition targetPosition, Action onActionComplete)
     {
         _targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
         _onActionComplete = onActionComplete;
         _isActive = true;
     }
-
-    /// <summary>
-    /// Checks if grid selected by input is valid for specific action
-    /// </summary>
-    /// <param name="gridPosition"></param>
-    /// <returns></returns>
-    public bool IsValidActionGridPosition(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
-        return validGridPositionList.Contains(gridPosition);
-    }
-
-    /// <summary>
-    /// Validation of the actions' grid
-    /// </summary>
-    /// <returns></returns>
-    public List<GridPosition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = _unit.GetGridPosition();

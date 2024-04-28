@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
 using System;
 
 public abstract class BaseAction : MonoBehaviour
 {
     [SerializeField] protected string _actionName;
+    [SerializeField] protected Image _actionImage;
 
     protected Action _onActionComplete;
     protected bool _isActive;
@@ -17,5 +19,29 @@ public abstract class BaseAction : MonoBehaviour
     }
 
     public virtual string GetActionName() { return _actionName; }
+    public virtual Image GetActionImage() { return _actionImage; }
+
+    /// <summary>
+    /// Checks if grid selected by input is valid for specific action
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <returns></returns>
+    public virtual bool IsValidActionGridPosition(GridPosition gridPosition)
+    {
+        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+        return validGridPositionList.Contains(gridPosition);
+    }
+
+    /// <summary>
+    /// Validation of the actions' grid
+    /// </summary>
+    /// <returns></returns>
+    public abstract List<GridPosition> GetValidActionGridPositionList();
+    /// <summary>
+    /// Takes Action based on implementation, usually allows Update to run
+    /// </summary>
+    /// <param name="gridPosition"></param>
+    /// <param name="onActionComplete"></param>
+    public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
 }

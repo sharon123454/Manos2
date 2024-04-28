@@ -21,10 +21,17 @@ public class SpinAction : BaseAction
             _onActionComplete();
         }
     }
-    public void Spin(Action onActionComplete)
+
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        _isActive = true;
-        _totalSpinAmount = 0;
         _onActionComplete = onActionComplete;
+        _totalSpinAmount = 0;
+        _isActive = true;
     }
+    public override List<GridPosition> GetValidActionGridPositionList()
+    {
+        GridPosition unitGridPosition = _unit.GetGridPosition();
+        return new List<GridPosition> { unitGridPosition };
+    }
+
 }
