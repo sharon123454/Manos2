@@ -9,6 +9,7 @@ public class UnitActionSystem : MonoBehaviour
     public static UnitActionSystem Instance { get; private set; }
 
     public event EventHandler OnSelectedUnitChanged;
+    public event EventHandler OnSelectedActionChanged;
 
     private string[] _activeLayerNames = { "Unit" };
     private LayerMask _activeUnitLayerMask;
@@ -45,7 +46,11 @@ public class UnitActionSystem : MonoBehaviour
 
     public Unit GetSelectedUnit() { return _selectedUnit; }
     public BaseAction GetSelectedAction() { return _selectedAction; }
-    public void SetSelectedAction(BaseAction action) { _selectedAction = action; }
+    public void SetSelectedAction(BaseAction action)
+    {
+        _selectedAction = action;
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+    }
     private void SetSelectedUnit(Unit unit)
     {
         _selectedUnit = unit;
