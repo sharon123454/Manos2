@@ -8,6 +8,7 @@ public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set; }
 
+    public event EventHandler<bool> OnBusyChanged;
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
 
@@ -119,7 +120,7 @@ public class UnitActionSystem : MonoBehaviour
         }
         return false;
     }
-    private void SetBusy() { _isBusy = true; }
-    private void ClearBusy() { _isBusy = false; }
+    private void SetBusy() { _isBusy = true; OnBusyChanged?.Invoke(this, _isBusy); }
+    private void ClearBusy() { _isBusy = false; OnBusyChanged?.Invoke(this, _isBusy); }
 
 }

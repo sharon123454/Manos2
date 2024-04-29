@@ -6,6 +6,7 @@ using System;
 
 public class UnitActionSystemUI : MonoBehaviour
 {
+    [SerializeField] private GameObject _actionsUIParent;
     [SerializeField] private Transform _actionButtonPrefab;
     [SerializeField] private Transform _buttonContainer;
 
@@ -17,10 +18,21 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void Start()
     {
+        UnitActionSystem.Instance.OnBusyChanged += UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
     }
+    private void OnDisable()
+    {
+        UnitActionSystem.Instance.OnBusyChanged -= UnitActionSystem_OnBusyChanged;
+        UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
+    }
 
+    private void UnitActionSystem_OnBusyChanged(object sender, bool isBusy)
+    {
+        _actionsUIParent.SetActive(!isBusy);
+    }
     private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
     {
         UpdateSelectedButtonVisual();
