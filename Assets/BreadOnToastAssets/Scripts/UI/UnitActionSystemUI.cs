@@ -18,17 +18,23 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void Start()
     {
+        UnitActionSystem.Instance.OnActionStart += UnitActionSystem_OnActionStart;
         UnitActionSystem.Instance.OnBusyChanged += UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
     }
     private void OnDisable()
     {
+        UnitActionSystem.Instance.OnActionStart -= UnitActionSystem_OnActionStart;
         UnitActionSystem.Instance.OnBusyChanged -= UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
     }
 
+    private void UnitActionSystem_OnActionStart(object sender, EventArgs e)
+    {
+        UpdateActionPoints();
+    }
     private void UnitActionSystem_OnBusyChanged(object sender, bool isBusy)
     {
         _actionsUIParent.SetActive(!isBusy);
@@ -43,6 +49,12 @@ public class UnitActionSystemUI : MonoBehaviour
         UpdateSelectedButtonVisual();
     }
 
+    private void UpdateActionPoints()
+    {
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        Debug.Log($"{transform} - {selectedUnit.GetActionPoints()}");
+        Debug.Log($"{transform} - {selectedUnit.GetBonusActionPoints()}");
+    }
     private void UpdateSelectedButtonVisual()
     {
         foreach (ActionButtonUI actionButton in _actionButtonUIList)
@@ -58,8 +70,8 @@ public class UnitActionSystemUI : MonoBehaviour
         }
         _actionButtonUIList.Clear();
 
-        Unit selctedUnit = UnitActionSystem.Instance.GetSelectedUnit();
-        foreach (BaseAction baseAction in selctedUnit.GetBaseActionArray())
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        foreach (BaseAction baseAction in selectedUnit.GetBaseActionArray())
         {
             Transform actionButtonTransform = Instantiate(_actionButtonPrefab, _buttonContainer);
             ActionButtonUI actionButtonUI = actionButtonTransform.GetComponent<ActionButtonUI>();

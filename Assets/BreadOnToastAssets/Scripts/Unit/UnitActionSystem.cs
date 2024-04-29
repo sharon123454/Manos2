@@ -8,6 +8,7 @@ public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set; }
 
+    public event EventHandler OnActionStart;
     public event EventHandler<bool> OnBusyChanged;
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
@@ -74,6 +75,7 @@ public class UnitActionSystem : MonoBehaviour
 
             SetBusy();
             GetSelectedAction().TakeAction(mouseGridPosition, ClearBusy);
+            OnActionStart?.Invoke(this, EventArgs.Empty);
         }
 
         #region deprecated conversion of baseAction to inhereting Action, call to TakeAction

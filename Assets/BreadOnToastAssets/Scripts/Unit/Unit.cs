@@ -34,6 +34,8 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public int GetActionPoints() { return _actionPoints; }
+    public int GetBonusActionPoints() { return _bonusActionPoints; }
     /// <summary>
     /// Allows Actions to get the units GridPosition without calculations
     /// </summary>
