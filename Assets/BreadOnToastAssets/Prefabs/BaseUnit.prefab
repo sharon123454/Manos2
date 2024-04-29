@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionName: Move
+  _actionImage: {fileID: 0}
+  _actionCost: 1
   _animator: {fileID: 5718055997175225877}
   _unitRotationSpeed: 10
   _unitMoveSpeed: 6.2
@@ -197,6 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionName: Spin
+  _actionImage: {fileID: 0}
+  _actionCost: 0
 --- !u!1001 &423914768460296307
 PrefabInstance:
   m_ObjectHideFlags: 0

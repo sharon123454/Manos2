@@ -4,10 +4,12 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
+public enum ActionCost { Free, Action, BonusAction, Both }
 public abstract class BaseAction : MonoBehaviour
 {
     [SerializeField] protected string _actionName;
     [SerializeField] protected Image _actionImage;
+    [SerializeField] protected ActionCost _actionCost = ActionCost.Action;
 
     protected Action _onActionComplete;
     protected bool _isActive;
@@ -18,6 +20,7 @@ public abstract class BaseAction : MonoBehaviour
         _unit = GetComponent<Unit>();
     }
 
+    public virtual ActionCost GetActionCost() { return _actionCost; }
     public virtual string GetActionName() { return _actionName; }
     public virtual Image GetActionImage() { return _actionImage; }
 

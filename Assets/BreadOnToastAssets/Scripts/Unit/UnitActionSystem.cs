@@ -69,12 +69,11 @@ public class UnitActionSystem : MonoBehaviour
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
-            if (GetSelectedAction().IsValidActionGridPosition(mouseGridPosition))
-            {
-                SetBusy();
-                GetSelectedAction().TakeAction(mouseGridPosition, ClearBusy);
-            }
-            else { Debug.Log("Position clicked isn't valid"); }
+            if (!GetSelectedAction().IsValidActionGridPosition(mouseGridPosition)) { Debug.Log("Position clicked isn't valid"); return; }
+            if (!GetSelectedUnit().TrySpendPointsToTakeAction(GetSelectedAction())) { return; }
+
+            SetBusy();
+            GetSelectedAction().TakeAction(mouseGridPosition, ClearBusy);
         }
 
         #region deprecated conversion of baseAction to inhereting Action, call to TakeAction

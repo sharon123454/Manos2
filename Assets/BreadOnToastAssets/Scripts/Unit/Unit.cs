@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
     private MoveAction _moveAction;
     private SpinAction _spinAction;
     private BaseAction[] _baseActionArray;
+    private int _actionPoints = 1;
+    private int _bonusActionPoints = 1;
 
     private void Awake()
     {
@@ -38,11 +40,58 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     public GridPosition GetGridPosition() { return _currentGridPosition; }
     public BaseAction[] GetBaseActionArray() { return _baseActionArray; }
+    public bool TrySpendPointsToTakeAction(BaseAction baseAction)
+    {
+        if (CanSpendPointsToTakeAction(baseAction))
+        {
+            switch (baseAction.GetActionCost())
+            {
+                case ActionCost.Free:
+                    break;
+                case ActionCost.Action:
+                    _actionPoints--;
+                    break;
+                case ActionCost.BonusAction:
+                    _bonusActionPoints--;
+                    break;
+                case ActionCost.Both:
+                    _actionPoints--;
+                    _bonusActionPoints--;
+                    break;
+                default:
+                    Debug.Log($"{transform} - encounterd action cost bug");
+                    break;
+            }
+            return true;
+        }
+        else { return false; }
+    }
     /// <summary>
     /// Allows UnitActionSystem to reach the Units' Action
     /// </summary>
     /// <returns></returns>
     public MoveAction GetMoveAction() { return _moveAction; }
     public SpinAction GetSpinAction() { return _spinAction; }
+
+    private bool CanSpendPointsToTakeAction(BaseAction baseAction)
+    {
+        switch (baseAction.GetActionCost())
+        {
+            case ActionCost.Free:
+                return true;
+            case ActionCost.Action:
+                if (_actionPoints > 0) { return true; }
+                return false;
+            case ActionCost.BonusAction:
+                if (_bonusActionPoints > 0) { return true; }
+                return false;
+            case ActionCost.Both:
+                if (_actionPoints > 0 && _bonusActionPoints > 0) { return true; }
+                return false;
+            default:
+                Debug.Log($"{transform} - encounterd action cost bug");
+                return false;
+        }
+    }
 
 }
