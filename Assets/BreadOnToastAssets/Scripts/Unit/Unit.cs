@@ -1,9 +1,15 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class Unit : MonoBehaviour
 {
+    private const int ACTION_POINT_MAX = 1;
+    private const int BONUS_ACTION_POINT_MAX = 1;
+
+    public static event EventHandler OnAnyActionPointsChanged;
+
     private GridPosition _currentGridPosition;
     private MoveAction _moveAction;
     private SpinAction _spinAction;
@@ -21,6 +27,7 @@ public class Unit : MonoBehaviour
     {
         _currentGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(_currentGridPosition, this);
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
     }
     //updates character movement
     void Update()
@@ -32,6 +39,10 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.UnitMovedGridPosition(_currentGridPosition, this, newGridPosition);
             _currentGridPosition = newGridPosition;
         }
+    }
+    private void OnDisable()
+    {
+        TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;
     }
 
     public int GetActionPoints() { return _actionPoints; }
@@ -64,6 +75,8 @@ public class Unit : MonoBehaviour
                     Debug.Log($"{transform} - encounterd action cost bug");
                     break;
             }
+
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
         else { return false; }
@@ -94,6 +107,13 @@ public class Unit : MonoBehaviour
                 Debug.Log($"{transform} - encounterd action cost bug");
                 return false;
         }
+    }
+
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
+    {
+        _actionPoints = ACTION_POINT_MAX;
+        _bonusActionPoints = BONUS_ACTION_POINT_MAX;
+        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
 }

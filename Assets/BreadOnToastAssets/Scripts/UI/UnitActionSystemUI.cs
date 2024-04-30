@@ -18,22 +18,28 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void Start()
     {
-        UnitActionSystem.Instance.OnActionStart += UnitActionSystem_OnActionStart;
+        Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
+        UnitActionSystem.Instance.OnActionStart += UnitActionSystem_OnActionStart;//might delete
         UnitActionSystem.Instance.OnBusyChanged += UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
     }
     private void OnDisable()
     {
-        UnitActionSystem.Instance.OnActionStart -= UnitActionSystem_OnActionStart;
+        Unit.OnAnyActionPointsChanged -= Unit_OnAnyActionPointsChanged;
+        UnitActionSystem.Instance.OnActionStart -= UnitActionSystem_OnActionStart;;//might delete
         UnitActionSystem.Instance.OnBusyChanged -= UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
     }
 
-    private void UnitActionSystem_OnActionStart(object sender, EventArgs e)
+    private void Unit_OnAnyActionPointsChanged(object sender, EventArgs e)
     {
         UpdateActionPoints();
+    }
+    private void UnitActionSystem_OnActionStart(object sender, EventArgs e)//might delete
+    {
+        //UpdateActionPoints();
     }
     private void UnitActionSystem_OnBusyChanged(object sender, bool isBusy)
     {
@@ -49,11 +55,11 @@ public class UnitActionSystemUI : MonoBehaviour
         UpdateSelectedButtonVisual();
     }
 
-    private void UpdateActionPoints()
+    private void UpdateActionPoints()//NEEDS VISUAL REPRESENTATION
     {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
-        Debug.Log($"{transform} - {selectedUnit.GetActionPoints()}");
-        Debug.Log($"{transform} - {selectedUnit.GetBonusActionPoints()}");
+        Debug.Log($"{selectedUnit.transform} - {selectedUnit.GetActionPoints()}");
+        Debug.Log($"{selectedUnit.transform} - {selectedUnit.GetBonusActionPoints()}");
     }
     private void UpdateSelectedButtonVisual()
     {
