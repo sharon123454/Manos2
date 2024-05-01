@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine;
 using System;
 
@@ -18,7 +17,8 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void Start()
     {
-        Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;//might delete
         UnitActionSystem.Instance.OnActionStart += UnitActionSystem_OnActionStart;//might delete
         UnitActionSystem.Instance.OnBusyChanged += UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
@@ -26,15 +26,21 @@ public class UnitActionSystemUI : MonoBehaviour
     }
     private void OnDisable()
     {
-        Unit.OnAnyActionPointsChanged -= Unit_OnAnyActionPointsChanged;
-        UnitActionSystem.Instance.OnActionStart -= UnitActionSystem_OnActionStart;;//might delete
+        TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;
+        Unit.OnAnyActionPointsChanged -= Unit_OnAnyActionPointsChanged;//might delete
+        UnitActionSystem.Instance.OnActionStart -= UnitActionSystem_OnActionStart;//might delete
         UnitActionSystem.Instance.OnBusyChanged -= UnitActionSystem_OnBusyChanged;
         UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnSelectedActionChanged -= UnitActionSystem_OnSelectedActionChanged;
     }
 
-    private void Unit_OnAnyActionPointsChanged(object sender, EventArgs e)
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
     {
+        _actionsUIParent.SetActive(TurnSystem.Instance.IsPlayerTurn());
+    }
+    private void Unit_OnAnyActionPointsChanged(object sender, EventArgs e)//might delete
+    {
+        //might need event on UnitUI instead of here
         UpdateActionPoints();
     }
     private void UnitActionSystem_OnActionStart(object sender, EventArgs e)//might delete
@@ -58,8 +64,7 @@ public class UnitActionSystemUI : MonoBehaviour
     private void UpdateActionPoints()//NEEDS VISUAL REPRESENTATION
     {
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
-        Debug.Log($"{selectedUnit.transform} - {selectedUnit.GetActionPoints()}");
-        Debug.Log($"{selectedUnit.transform} - {selectedUnit.GetBonusActionPoints()}");
+        Debug.Log($"Unit:{selectedUnit.transform} - AP:{selectedUnit.GetActionPoints()}, BAP{selectedUnit.GetBonusActionPoints()}");
     }
     private void UpdateSelectedButtonVisual()
     {

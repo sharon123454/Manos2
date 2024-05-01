@@ -34,8 +34,10 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void Update()
     {
-        //place under line 37 to allow switching characters mid action
-        if (_isBusy) { Debug.Log("Unit is busy"); return; }
+        //place under TryRaycast to allow switching characters mid action
+        if (_isBusy) { return; }
+
+        if (!TurnSystem.Instance.IsPlayerTurn()) { return; }
 
         //Checks if pointer is above UI
         if (EventSystem.current.IsPointerOverGameObject()) { return; }
@@ -113,6 +115,7 @@ public class UnitActionSystem : MonoBehaviour
                 if (rayCastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
                     if (GetSelectedUnit() == unit) { return false; }
+                    if (unit.IsEnemy()) { return false; }
 
                     SetSelectedUnit(unit);
                     return true;

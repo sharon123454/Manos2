@@ -5,10 +5,12 @@ using System;
 
 public class Unit : MonoBehaviour
 {
+    public static event EventHandler OnAnyActionPointsChanged;
+
+    [SerializeField] private bool _isEnemy;
+
     private const int ACTION_POINT_MAX = 1;
     private const int BONUS_ACTION_POINT_MAX = 1;
-
-    public static event EventHandler OnAnyActionPointsChanged;
 
     private GridPosition _currentGridPosition;
     private MoveAction _moveAction;
@@ -45,6 +47,7 @@ public class Unit : MonoBehaviour
         TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;
     }
 
+    public bool IsEnemy() { return _isEnemy; }
     public int GetActionPoints() { return _actionPoints; }
     public int GetBonusActionPoints() { return _bonusActionPoints; }
     /// <summary>
@@ -111,9 +114,13 @@ public class Unit : MonoBehaviour
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
     {
-        _actionPoints = ACTION_POINT_MAX;
-        _bonusActionPoints = BONUS_ACTION_POINT_MAX;
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        if (IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() ||
+            !IsEnemy() && TurnSystem.Instance.IsPlayerTurn())
+        {
+            _actionPoints = ACTION_POINT_MAX;
+            _bonusActionPoints = BONUS_ACTION_POINT_MAX;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
 }
