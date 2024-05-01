@@ -15,6 +15,12 @@ public class GridObject
         _gridUnitList = new List<Unit>();
     }
 
+    public Unit GetUnit()
+    {
+        if (HasAnyUnits())
+            return _gridUnitList[0];
+        return null;
+    }
     public List<Unit> GetUnitList() { return _gridUnitList; }
     public bool HasAnyUnits() { return _gridUnitList.Count > 0; }
 
