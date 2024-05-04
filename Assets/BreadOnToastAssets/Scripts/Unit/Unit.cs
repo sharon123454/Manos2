@@ -48,6 +48,7 @@ public class Unit : MonoBehaviour
     }
 
     public bool IsEnemy() { return _isEnemy; }
+    public void TakeDamage() { Debug.Log($"{name} took damage."); }//Empty needs to connect to health system
     public int GetActionPoints() { return _actionPoints; }
     public int GetBonusActionPoints() { return _bonusActionPoints; }
     /// <summary>
@@ -55,6 +56,7 @@ public class Unit : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public GridPosition GetGridPosition() { return _currentGridPosition; }
+    public Vector3 GetWorldPosition() { return transform.position; }
     public BaseAction[] GetBaseActionArray() { return _baseActionArray; }
     public bool TrySpendPointsToTakeAction(BaseAction baseAction)
     {

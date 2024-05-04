@@ -5,29 +5,75 @@ using System;
 
 public class RangeAction : BaseAction
 {
-    private float _totalSpinAmount;
-    private int _maxShootDistance;
+    [SerializeField] private int _maxShootDistance = 6;
+
+    private Unit _targetUnit;
+    private State _currentState;
+    private bool _canShootBullet;
+
+    private float _stateTimer;
+    private float _aimingStateTime = 1f;
+    private float _shootingStateTime = 0.1f;
+    private float _cooloffStateTime = 0.5f;
+
+    private enum State { Aiming, Shooting, Cooloff }
 
     private void Update()
     {
         if (!_isActive) { return; }
 
-        float spinAmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAmount, 0);
+        _stateTimer -= Time.deltaTime;
 
-        _totalSpinAmount += spinAmount;
-        if (_totalSpinAmount >= 360)
+        switch (_currentState)
         {
-            _isActive = false;
-            _onActionComplete();
+            case State.Aiming:
+                Vector3 aimDirection = (_targetUnit.GetWorldPosition() - _unit.GetWorldPosition()).normalized;
+                transform.forward = Vector3.Lerp(transform.forward, aimDirection, 9.5f * Time.deltaTime);
+                break;
+            case State.Shooting:
+                if (_canShootBullet)
+                {
+                    Shoot();
+                    _canShootBullet = false;
+                }
+                break;
+            case State.Cooloff:
+                break;
         }
+
+        if (_stateTimer <= 0) { NextState(); }
+
+    }
+    private void NextState()
+    {
+        switch (_currentState)
+        {
+            case State.Aiming:
+                _currentState = State.Shooting;
+                _stateTimer = _shootingStateTime;
+                break;
+            case State.Shooting:
+                _currentState = State.Cooloff;
+                _stateTimer = _cooloffStateTime;
+                break;
+            case State.Cooloff:
+                ActionComplete();
+                break;
+        }
+    }
+    private void Shoot()
+    {
+        _targetUnit.TakeDamage();
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        _onActionComplete = onActionComplete;
-        _totalSpinAmount = 0;
-        _isActive = true;
+        ActionStart(onActionComplete);
+
+        _targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        _currentState = State.Aiming;
+        _stateTimer = _aimingStateTime;
+        _canShootBullet = true;
     }
     public override List<GridPosition> GetValidActionGridPositionList()
     {

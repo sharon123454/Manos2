@@ -11,9 +11,10 @@ public abstract class BaseAction : MonoBehaviour
     [SerializeField] protected Image _actionImage;
     [SerializeField] protected ActionCost _actionCost = ActionCost.Action;
 
-    protected Action _onActionComplete;
-    protected bool _isActive;
     protected Unit _unit;
+    protected bool _isActive;
+
+    private Action _onActionComplete;
 
     protected virtual void Awake()
     {
@@ -46,5 +47,16 @@ public abstract class BaseAction : MonoBehaviour
     /// <param name="gridPosition"></param>
     /// <param name="onActionComplete"></param>
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+
+    protected void ActionStart(Action onActionComplete)
+    {
+        _isActive = true;
+        _onActionComplete = onActionComplete;
+    }
+    protected void ActionComplete()
+    {
+        _isActive = false;
+        _onActionComplete();
+    }
 
 }
