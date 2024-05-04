@@ -5,6 +5,8 @@ using System;
 
 public class RangeAction : BaseAction
 {
+    public event EventHandler<string> OnShoot;
+
     [SerializeField] private int _maxShootDistance = 6;
 
     private Unit _targetUnit;
@@ -34,7 +36,6 @@ public class RangeAction : BaseAction
                 if (_canShootBullet)
                 {
                     Shoot();
-                    _canShootBullet = false;
                 }
                 break;
             case State.Cooloff:
@@ -63,7 +64,9 @@ public class RangeAction : BaseAction
     }
     private void Shoot()
     {
+        OnShoot?.Invoke(this, GetActionName());
         _targetUnit.TakeDamage();
+        _canShootBullet = false;
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)

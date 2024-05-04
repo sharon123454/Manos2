@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6809665196241624993}
   - component: {fileID: 8989444064761155123}
+  - component: {fileID: 552452300957356826}
   - component: {fileID: 7339070871257945448}
   - component: {fileID: 33582428085636162}
   - component: {fileID: 7997038479602178319}
@@ -149,6 +150,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemy: 0
+--- !u!114 &552452300957356826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546399621768341872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42754878897565341a7ff00d1905e769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5718055997175225877}
 --- !u!65 &7339070871257945448
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -223,6 +237,7 @@ MonoBehaviour:
   _actionName: Range
   _actionImage: {fileID: 0}
   _actionCost: 2
+  _maxShootDistance: 6
 --- !u!114 &7712863545667232581
 MonoBehaviour:
   m_ObjectHideFlags: 0

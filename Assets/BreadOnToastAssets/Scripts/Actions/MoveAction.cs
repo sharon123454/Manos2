@@ -5,7 +5,8 @@ using System;
 
 public class MoveAction : BaseAction
 {
-    [SerializeField] private Animator _animator;
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
 
     [Header("Base Unit Parameters")]
     [SerializeField] private float _unitRotationSpeed = 7.5f;
@@ -28,18 +29,13 @@ public class MoveAction : BaseAction
 
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)//Stops jittering from never reaching clean position
         {
-            //Animation
-            _animator.SetBool("IsWalking", true);
             //Movement
             transform.position += moveDir * _unitMoveSpeed * Time.deltaTime;
         }
         else
         {
-            if (_animator.GetBool("IsWalking"))
-            {
-                _animator.SetBool("IsWalking", false);
-                ActionComplete();
-            }
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
+            ActionComplete();
         }
 
         //Rotation (smooth rotation because starting point isn't cached)
@@ -56,6 +52,7 @@ public class MoveAction : BaseAction
         ActionStart(onActionComplete);
 
         _targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
     }
     public override List<GridPosition> GetValidActionGridPositionList()
     {
