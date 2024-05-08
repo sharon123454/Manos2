@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-    [SerializeField] private Transform bulletHitVFXPrefab;
-    [SerializeField] private TrailRenderer trailRenderer;
-    [SerializeField] private float speed = 200f;
+    [SerializeField] private Transform _bulletHitVFXPrefab;
+    [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private float _moveSpeed = 200f;
 
-    private Vector3 targetPos;
+    private Vector3 _targetPosition;
 
     private void Update()
     {
-        Vector3 moveDir = (targetPos - transform.position).normalized;
+        Vector3 moveDir = (_targetPosition - transform.position).normalized;
 
-        float distanceBeforeMoving = Vector3.Distance(transform.position, targetPos);
+        float distanceBeforeMoving = Vector3.Distance(transform.position, _targetPosition);
 
-        transform.position += moveDir * speed * Time.deltaTime;
+        transform.position += moveDir * _moveSpeed * Time.deltaTime;
 
-        float distanceAfterMoving = Vector3.Distance(transform.position, targetPos);
+        float distanceAfterMoving = Vector3.Distance(transform.position, _targetPosition);
 
         if (distanceBeforeMoving < distanceAfterMoving)
         {
-            transform.position = targetPos;
+            transform.position = _targetPosition;
 
-            if (trailRenderer)
-                trailRenderer.transform.parent = null;
+            if (_trailRenderer)
+                _trailRenderer.transform.parent = null;
 
             Destroy(gameObject);
 
-            Instantiate(bulletHitVFXPrefab, targetPos, Quaternion.identity);
+            Instantiate(_bulletHitVFXPrefab, _targetPosition, Quaternion.identity);
         }
     }
 
     public void SetUp(Vector3 targetPosition)
     {
-        targetPos = targetPosition;
+        _targetPosition = targetPosition;
     }
 
 }

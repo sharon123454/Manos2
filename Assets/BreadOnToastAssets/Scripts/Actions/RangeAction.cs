@@ -3,9 +3,19 @@ using System.Collections;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Holds the: ActionName, ShootingUnit, TargetUnit and the TargetHitPositionType
+/// </summary>
+public class OnShootEventArgs : EventArgs
+{
+    public string ActionName;
+    public Unit ShootingUnit;
+    public Unit TargetUnit;
+    public HitPositionType TargetHitPositionType;
+}
 public class RangeAction : BaseAction
 {
-    public event EventHandler<string> OnShoot;
+    public event EventHandler<OnShootEventArgs> OnShoot;
 
     [SerializeField] private int _maxShootDistance = 6;
 
@@ -64,8 +74,17 @@ public class RangeAction : BaseAction
     }
     private void Shoot()
     {
-        OnShoot?.Invoke(this, GetActionName());
-        _targetUnit.TakeDamage();
+        HitPositionType hitType;
+        _targetUnit.TakeDamage(out hitType);
+
+        OnShoot?.Invoke(this, new OnShootEventArgs()
+        {
+            ActionName = GetActionName(),
+            TargetUnit = _targetUnit,
+            ShootingUnit = _unit,
+            TargetHitPositionType = hitType
+        });
+
         _canShootBullet = false;
     }
 

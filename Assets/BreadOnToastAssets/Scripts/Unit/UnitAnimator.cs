@@ -4,6 +4,7 @@ using System;
 public class UnitAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private AnimationVFXManager _vFXManager;
 
     private void Awake()
     {
@@ -30,9 +31,10 @@ public class UnitAnimator : MonoBehaviour
     //    _animator.Play($"{actionName}_Anim");
     //}
 
-    private void RangeAction_OnShoot(object sender, string actionName)
+    private void RangeAction_OnShoot(object sender, OnShootEventArgs shootActionEventArgs)
     {
-        _animator.Play($"{actionName}_Anim");
+        _animator.Play($"{shootActionEventArgs.ActionName}_Anim");
+        _vFXManager.SetShootVFXData(shootActionEventArgs);
     }
     private void MoveAction_OnStartMoving(object sender, EventArgs e)
     {

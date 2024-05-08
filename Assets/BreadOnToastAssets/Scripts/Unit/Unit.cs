@@ -3,11 +3,25 @@ using System.Collections;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Type of the position where the attack should hit if it, attack hits/crits/misses
+/// </summary>
+public enum HitPositionType { Normal, Crit, Miss }
+/// <summary>
+/// Data which holds what area is hit on the unit and its position
+/// </summary>
+[Serializable]
+public struct HitPosition
+{
+    public Transform HitLocation;
+    public HitPositionType Type;
+}
 public class Unit : MonoBehaviour
 {
     public static event EventHandler OnAnyActionPointsChanged;
 
     [SerializeField] private bool _isEnemy;
+    [SerializeField] private List<HitPosition> _unitHitPositionList;
 
     private const int ACTION_POINT_MAX = 1;
     private const int BONUS_ACTION_POINT_MAX = 1;
@@ -48,9 +62,14 @@ public class Unit : MonoBehaviour
     }
 
     public bool IsEnemy() { return _isEnemy; }
-    public void TakeDamage() { Debug.Log($"{name} took damage."); }//Empty needs to connect to health system
+    public void TakeDamage(out HitPositionType hitType)//Empty needs to connect to health system
+    {
+        Debug.Log($"{name} took damage.");
+        hitType = HitPositionType.Normal;
+    }
     public int GetActionPoints() { return _actionPoints; }
     public int GetBonusActionPoints() { return _bonusActionPoints; }
+    public List<HitPosition> GetUnitHitPositionList() { return _unitHitPositionList; }
     /// <summary>
     /// Allows Actions to get the units GridPosition without calculations
     /// </summary>
